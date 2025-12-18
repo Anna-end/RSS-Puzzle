@@ -1,3 +1,3 @@
-import { formContainer } from './components/LoginForm/UserFormUi';
+import { createUILoginPage } from './components/LoginForm/LoginPageUI';
 
-document.body.append(formContainer);
+createUILoginPage();
