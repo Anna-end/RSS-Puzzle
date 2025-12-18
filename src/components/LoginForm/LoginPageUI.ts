@@ -26,10 +26,9 @@ export function createUILoginPage() {
       type: 'text',
       name: 'firstName',
       placeholder: 'Enter first name',
-      required: true,
     },
   });
-  const lableFirstName = CreatorElement.createElement('label', {
+  const labelFirstName = CreatorElement.createElement('label', {
     classes: [styles.form_lable],
     textContent: 'First Name:',
     attributes: { for: 'firstName' },
@@ -38,9 +37,13 @@ export function createUILoginPage() {
   // Add inpur lable of surname
   const userFormInputSurname = CreatorElement.createElement('input', {
     classes: [styles.form_input],
-    attributes: { type: 'text', name: 'surname', placeholder: 'Enter surname', required: true },
+    attributes: {
+      type: 'text',
+      name: 'surname',
+      placeholder: 'Enter surname',
+    },
   });
-  const lableSurname = CreatorElement.createElement('label', {
+  const labelSurname = CreatorElement.createElement('label', {
     classes: [styles.form_lable],
     textContent: 'Surname:',
     attributes: { for: 'surname' },
@@ -48,15 +51,26 @@ export function createUILoginPage() {
 
   // Add button of form
   const formButton = CreatorElement.createElement('button', {
+    id: 'submit-btn',
     textContent: 'Login',
     classes: [styles.form_btn],
     attributes: { type: 'submit' },
   });
 
-  containerForFirstName.append(lableFirstName, userFormInputFirstName);
-  containerForSurname.append(lableSurname, userFormInputSurname);
+  containerForFirstName.append(labelFirstName, userFormInputFirstName);
+  containerForSurname.append(labelSurname, userFormInputSurname);
   userForm.append(containerForFirstName, containerForSurname, formButton);
   formContainer.appendChild(userForm);
 
   document.body.append(formContainer);
+
+  return {
+    formContainer,
+    userForm,
+    containerForFirstName,
+    containerForSurname,
+    userFormInputFirstName,
+    userFormInputSurname,
+    formButton,
+  };
 }

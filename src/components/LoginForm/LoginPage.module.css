@@ -90,19 +90,3 @@ body {
     gap: 0;
   }
 }
-
-.error_popup {
-  position: absolute;
-  opacity: 0;
-  top: -15px;
-  right: -15px;
-  color: rgb(192, 34, 34);
-  padding: 2px 5px;
-  border-radius: 3px;
-  font-size: 13px;
-}
-.show {
-  opacity: 1;
-}
-.form_input--error {
-}
