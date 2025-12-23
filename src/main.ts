@@ -1,3 +1,3 @@
-import { createUILoginPage } from './components/LoginForm/LoginPageUI';
+import { ValidationLoginPage } from './components/LoginForm/ValidationLoginPage/ValidationLogin';
 
-createUILoginPage();
+const loginValidator = new ValidationLoginPage();

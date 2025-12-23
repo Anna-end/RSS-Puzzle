@@ -1,0 +1,28 @@
+.error_popup {
+  right: -50px;
+  top: 30px;
+  color: #dc3545;
+  font-size: 14px;
+  min-height: 20px;
+  margin-top: 5px;
+  padding: 5px 10px;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  position: absolute;
+  z-index: 10;
+  box-sizing: border-box;
+}
+
+.error_visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.form_input_container {
+  position: relative;
+  margin-bottom: 25px;
+}
