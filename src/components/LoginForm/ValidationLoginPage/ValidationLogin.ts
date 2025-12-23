@@ -7,6 +7,8 @@ export class ValidationLoginPage {
   private firstNameError: HTMLDivElement;
   private surnameError: HTMLDivElement;
   private nameRegex: RegExp;
+  private firstname: string = '';
+  private surename: string = '';
   constructor() {
     this.elements = createUILoginPage();
     this.nameRegex = /^[A-Z][A-Za-z-]*$/;
@@ -52,15 +54,23 @@ export class ValidationLoginPage {
     let input: HTMLInputElement;
     let errorElement: HTMLDivElement;
     let validationResult: { isValid: boolean; errors: string[] };
-
+    let valueOfInput: string;
     if (fieldType === 'firstName') {
       input = this.elements.userFormInputFirstName;
+      valueOfInput = input.value.trim();
       errorElement = this.firstNameError;
-      validationResult = this.validateFirstName(input.value.trim());
+      validationResult = this.validateFirstName(valueOfInput);
+      if (validationResult.isValid === true) {
+        this.firstname = valueOfInput;
+      }
     } else {
       input = this.elements.userFormInputSurname;
+      valueOfInput = input.value.trim();
       errorElement = this.surnameError;
-      validationResult = this.validateSurname(input.value.trim());
+      validationResult = this.validateSurname(valueOfInput);
+      if (validationResult.isValid === true) {
+        this.surename = valueOfInput;
+      }
     }
 
     if (!validationResult.isValid) {
@@ -146,5 +156,19 @@ export class ValidationLoginPage {
     errorElement.textContent = '';
     input.classList.remove(styles.input_error);
     errorElement.classList.remove(styles.error_visible);
+  }
+
+  public getUserDataObject(): { firstname?: string; surename?: string } {
+    const objForDataName: {
+      firstname?: string;
+      surename?: string;
+    } = {};
+    if (this.firstname) {
+      objForDataName.firstname = this.firstname;
+    }
+    if (this.surename) {
+      objForDataName.surename = this.surename;
+    }
+    return objForDataName;
   }
 }
