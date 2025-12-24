@@ -2,10 +2,30 @@ import { CreatorElement } from '../../utils/element-creator';
 import styles from './satrtpage.module.css';
 
 export function createUIStartPage() {
+  function getUserDataFromStorage() {
+    try {
+      const userJson = localStorage.getItem('userData');
+      if (userJson) {
+        return JSON.parse(userJson);
+      }
+      return null;
+    } catch (error) {
+      console.error('Ошибка при чтении из Local Storage:', error);
+      return null;
+    }
+  }
+
+  const userData = getUserDataFromStorage();
   const sartPageContainer = CreatorElement.createElement('div', {
     classes: [styles.start_page__container],
   });
-  const startPage = CreatorElement.createElement('div', { classes: [styles.start_page] });
+  const startPage = CreatorElement.createElement('div', {
+    classes: [styles.start_page],
+  });
+  const greeting = CreatorElement.createElement('h3', {
+    textContent: `Hi, ${userData.firstname} ${userData.surename}`,
+    classes: [styles.start_page__greeting],
+  });
   const gameName = CreatorElement.createElement('h1', {
     textContent: 'English Puzzle',
     classes: [styles.start_page__title],
@@ -25,7 +45,7 @@ export function createUIStartPage() {
     classes: [styles.start_page__logoutBtn],
   });
 
-  startPage.append(gameName, gameDescription, startBtn, logoutBtn);
+  startPage.append(greeting, gameName, gameDescription, startBtn, logoutBtn);
   sartPageContainer.append(startPage);
   document.body.append(sartPageContainer);
   return {
