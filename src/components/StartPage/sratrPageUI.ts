@@ -11,11 +11,12 @@ export function createUIStartPage() {
     classes: [styles.start_page__title],
   });
   const gameDescription = CreatorElement.createElement('p', {
-    textContent: 'Click on words',
+    textContent:
+      'Click on words, collect phrases. World can be drag and drop. Select tooltips in the menu',
     classes: [styles.startPge__text],
   });
   const startBtn = CreatorElement.createElement('button', {
-    textContent: 'Srart',
+    textContent: 'Start',
     classes: [styles.start_page__sartBtn],
   });
   const logoutBtn = CreatorElement.createElement('button', {

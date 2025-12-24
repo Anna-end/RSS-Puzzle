@@ -9,16 +9,17 @@
   flex-direction: column;
   align-items: center;
   padding: 30px;
-  box-shadow: inset -10px -3px 14px 5px rgba(0, 0, 0, 0.4);
 }
 .start_page__title {
   color: white;
 }
 .startPge__text {
   color: white;
+  text-align: center;
 }
 .start_page__sartBtn {
   max-width: 150px;
+  min-width: 50vh;
   padding: 10px;
   background: #004b9bf9;
   color: white;
@@ -30,8 +31,10 @@
 
 .start_page__logoutBtn {
   max-width: 150px;
+  min-width: 50vh;
   padding: 10px;
-  background: #004b9bf9;
+  margin: 10px;
+  background: #040f1b72;
   color: white;
   border: none;
   border-radius: 6px;
