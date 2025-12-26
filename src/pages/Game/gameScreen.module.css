@@ -1,0 +1,20 @@
+.container {
+  margin: 0 auto;
+}
+.game {
+  display: flex;
+  flex-direction: column;
+}
+
+.game__header {
+}
+.game__field {
+  display: flex;
+  flex-direction: column;
+}
+
+.game__area {
+}
+
+.game__sentence_builder {
+}
