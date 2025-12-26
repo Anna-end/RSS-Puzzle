@@ -18,6 +18,9 @@ export function createUIStartPage() {
   const userData = getUserDataFromStorage();
   const sartPageContainer = CreatorElement.createElement('div', {
     classes: [styles.start_page__container],
+    attributes: {
+      data: 'hidden',
+    },
   });
   const startPage = CreatorElement.createElement('div', {
     classes: [styles.start_page],
@@ -36,6 +39,7 @@ export function createUIStartPage() {
     classes: [styles.startPge__text],
   });
   const startBtn = CreatorElement.createElement('button', {
+    id: 'startBtn',
     textContent: 'Start',
     classes: [styles.start_page__sartBtn],
   });

@@ -39,6 +39,22 @@ h3 {
   cursor: pointer;
 }
 
+.start_page__sartBtn:hover {
+  background-color: #4338ca;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(79, 70, 229, 0.2);
+}
+
+.start_page__sartBtn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(79, 70, 229, 0.2);
+  transition: transform 0.1s ease;
+}
+
+.start_page__sartBtn:focus {
+  outline: 2px solid #4f46e5;
+  outline-offset: 2px;
+}
 .start_page__logoutBtn {
   max-width: 150px;
   min-width: 50vh;
@@ -50,4 +66,8 @@ h3 {
   border-radius: 6px;
   font-size: 16px;
   cursor: pointer;
+}
+
+.start_page__container.hidden {
+  display: none;
 }

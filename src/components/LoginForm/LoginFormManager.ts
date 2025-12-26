@@ -1,5 +1,5 @@
 import { ValidationLoginPage } from './ValidationLoginPage/ValidationLogin';
-import { createUIStartPage } from '../StartPage/sratrPageUI';
+import { createUIStartPage } from '../../pages/Start/sratrPage';
 
 export class LoginFormManager {
   private currentLogin: boolean;
@@ -124,7 +124,7 @@ export class LoginFormManager {
     this.currentLogin = false;
     this.userData = {};
 
-    const container = document.getElementById('app') || document.body;
+    const container = document.body;
     container.innerHTML = '';
 
     this.showloginForm();
