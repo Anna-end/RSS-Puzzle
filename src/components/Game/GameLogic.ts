@@ -1,6 +1,5 @@
 import styles from '../../pages/Start/satrtpage.module.css';
 import { gameScreenUi } from '../../pages/Game/GameScreen';
-import { createUIStartPage } from '../../pages/Start/sratrPage';
 export class GameLogic {
   constructor() {
     this.startGame();

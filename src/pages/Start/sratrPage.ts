@@ -1,5 +1,5 @@
 import { CreatorElement } from '../../utils/element-creator';
-import styles from './satrtpage.module.css';
+import styles from './StartPage.module.css';
 
 export function createUIStartPage() {
   function getUserDataFromStorage() {

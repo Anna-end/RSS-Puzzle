@@ -1,12 +1,28 @@
-.container {
-  margin: 0 auto;
+html,
+body {
+  overflow: hidden; /* Убирает прокрутку */
+  height: 100%; /* Важно для корректной работы */
+  margin: 0;
+  padding: 0;
 }
-.game {
+.game__container {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+.game {
+  width: 70%;
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #efcbbb;
 }
 
 .game__header {
+  display: flex;
 }
 .game__field {
   display: flex;
@@ -16,5 +32,11 @@
 .game__area {
 }
 
-.game__sentence_builder {
+.game__mixed_words_area {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 15px;
+  background-color: #fffafa;
+  border-radius: 10px;
 }

@@ -1,0 +1,7 @@
+.word_cng__container {
+  box-shadow: -4px 4px 10px 3px rgb(64 0 0 / 26%);
+  padding: 3px;
+}
+.word_cng__container:hover {
+  box-shadow: -4px 4px 10px 3px rgba(40, 10, 10, 0.723);
+}
