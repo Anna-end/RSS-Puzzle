@@ -50,3 +50,17 @@ export async function getDataRound(
     return null;
   }
 }
+
+export async function getAllTextExamples(
+  levelNumber: number,
+  roundNumber: number
+): Promise<string[]> {
+  const roundData = await getDataRound(levelNumber, roundNumber);
+
+  if (roundData && roundData.words) {
+    return roundData.words
+      .map((word) => word.textExample)
+      .filter((text): text is string => text !== undefined);
+  }
+  return [];
+}

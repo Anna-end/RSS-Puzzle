@@ -1,17 +1,6 @@
-import { getDataRound } from '../../../utils/recipient-sentence';
+import { getAllTextExamples } from '../../../utils/recipient-sentence';
 import { CreatorElement } from '../../../utils/element-creator';
 import styless from './sentenseBuild.module.css';
-
-async function getAllTextExamples(levelNumber: number, roundNumber: number): Promise<string[]> {
-  const roundData = await getDataRound(levelNumber, roundNumber);
-
-  if (roundData && roundData.words) {
-    return roundData.words
-      .map((word) => word.textExample)
-      .filter((text): text is string => text !== undefined);
-  }
-  return [];
-}
 
 export async function pushTextExampleInDom(
   levelNumber: number,
@@ -33,10 +22,21 @@ export async function pushTextExampleInDom(
     const arrShuffleWords = shuffleWordsArray(arrString);
     for (let i = 0; i <= arrShuffleWords.length - 1; i += 1) {
       const newElem: HTMLElement = CreatorElement.createElement('div', {
-        classes: styless.word_cng__container,
         textContent: arrShuffleWords[i],
+        attributes: {
+          draggable: 'true',
+          data: 'elem-drag',
+          dataDrag: `${stringNumber}`,
+        },
       });
-      sentenceBuilder?.append(newElem);
+      const newContainer: HTMLElement = CreatorElement.createElement('div', {
+        classes: styless.word_cng__container,
+        attributes: {
+          data: 'drag-container',
+        },
+      });
+      newContainer?.append(newElem);
+      sentenceBuilder?.append(newContainer);
     }
   } catch (error) {
     console.error('Ошибка при загрузке данных:', error);

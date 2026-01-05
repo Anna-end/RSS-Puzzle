@@ -1,5 +1,5 @@
 import { ValidationLoginPage } from './ValidationLoginPage/ValidationLogin';
-import { createUIStartPage } from '../../pages/Start/sratrPage';
+import { createUIStartPage } from '../../pages/Start/SratrPage';
 
 export class LoginFormManager {
   private currentLogin: boolean;

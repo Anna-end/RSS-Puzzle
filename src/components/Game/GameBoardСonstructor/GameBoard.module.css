@@ -1,0 +1,17 @@
+.game__sentense {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 6vh;
+  gap: 3px;
+}
+.game__word {
+  justify-content: space-around;
+  min-height: 20px;
+  min-width: 40px;
+  border: 1px dashed #999;
+  border-radius: 4px;
+  transition: width 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+}

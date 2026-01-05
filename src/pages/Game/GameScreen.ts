@@ -27,6 +27,9 @@ export function gameScreenUi() {
   });
   const gameArea = CreatorElement.createElement('div', {
     classes: [styless.game__area],
+    attributes: {
+      data: 'game-field',
+    },
   });
   const mixedWordsArea = CreatorElement.createElement('div', {
     classes: [styless.game__mixed_words_area],

@@ -1,0 +1,41 @@
+.hold {
+  box-shadow: none;
+  background-color: rgb(224, 120, 120);
+  border: 0px;
+}
+.hovered {
+  box-shadow: inset -2px 2px 8px 3px rgb(64 0 0 / 26%);
+}
+.drop {
+  white-space: nowrap;
+}
+.disabled {
+  background-color: #ffebee !important;
+  border-color: #ffcdd2 !important;
+  cursor: not-allowed !important;
+  opacity: 0.6;
+}
+
+/* Стиль для перетаскиваемых элементов */
+.dragElement {
+  display: inline-block;
+  white-space: nowrap;
+  cursor: move;
+  user-select: none;
+}
+
+[datadrop]:hover:not(.disabled) {
+  border-color: #666;
+}
+
+/* Когда элемент над контейнером */
+.hovered:not(.disabled) {
+  background-color: #f0f8ff;
+  border-color: #2196f3;
+}
+
+/* Когда элемент упал в контейнер */
+.drop {
+  border-style: solid;
+  background-color: #f1f8e9;
+}
