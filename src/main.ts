@@ -1,8 +1,12 @@
 import { LoginFormManager } from './components/LoginForm/LoginFormManager';
-import { createstartGamePage, gameLogic } from './components/Game/GameLogic';
-
+import { startGame, createstartGamePage } from './components/Game/GameLogic';
 const LoginForm = new LoginFormManager();
-const startButton = document.querySelector('#startBtn') as HTMLButtonElement | null;
+LoginForm.init();
 
-startButton?.addEventListener('click', createstartGamePage);
-gameLogic();
+const startPage = document.querySelector('[data="login"]') as HTMLElement;
+
+if (startPage) {
+  createstartGamePage();
+} else {
+  console.log('Нет страртовой страницы');
+}

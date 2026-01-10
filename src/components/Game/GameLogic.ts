@@ -10,24 +10,33 @@ import stylessBtn from '../../components/button/continueBtn.module.css';
 import { addDragDropLogic } from '../Game/DragandDrop/DragDropLogic';
 import { createContinueBtn } from '../button/ContinueButton';
 import { addDragDropLogicMobile } from '../Game/DragandDrop/DragDropMobile';
+import { initSelectors } from '../LevelAndRoundSelection/LevelAndRoundSelection';
+import stylessGamePage from '../../pages/Game/GameScreen.module.css';
 
-export function createstartGamePage() {
-  const startPage = document.querySelector('[data="hidden"]');
+export async function closeStartPage() {
+  const startPage = document.querySelector('[data="login"]');
   startPage?.classList.add(stylessStartPage.hidden);
-  gameScreenUi();
-
-  gameLogic();
+  const gamePage = document.querySelector('[data="hidden-game"]');
+  if (gamePage) {
+    gamePage.className = stylessGamePage.game__container;
+  }
 }
 
-export async function gameLogic() {
+export async function createstartGamePage() {
+  gameScreenUi();
+  startGame(1, 0);
+  await initSelectors();
+  backStartPage();
+}
+export async function startGame(numLevel: number, numRound: number) {
   try {
-    const dataRound: string[] = await getAllTextExamples(1, 0);
+    const dataRound: string[] = await getAllTextExamples(numLevel, numRound);
 
     if (dataRound && dataRound.length > 0) {
       let sentence = 0;
       createBoardGameWithSentence(dataRound);
-      create();
-      function create() {
+      createGameLogicForRound();
+      function createGameLogicForRound() {
         createMixWords(dataRound, sentence);
         addDragDropLogic(sentence);
         addDragDropLogicMobile(sentence);
@@ -66,7 +75,7 @@ export async function gameLogic() {
           }
           button.classList.add(stylessBtn.complite);
           button.removeEventListener('click', btnEvent);
-          create();
+          createGameLogicForRound();
         });
       }
     } else {
@@ -96,4 +105,14 @@ function checkSentens(dataRound: string[], sentence: number) {
   console.log(texts);
   console.log(sd);
   return sameSentence;
+}
+
+function backStartPage() {
+  const exitBtn = document.querySelector('[data="exit"]');
+  exitBtn?.addEventListener('click', () => {
+    const startPage = document.querySelector('[data="login"]');
+    startPage?.classList.remove(stylessStartPage.hidden);
+    const gamePage = document.querySelector('[data="hidden-game"]');
+    gamePage?.classList.add(stylessGamePage.hidden);
+  });
 }

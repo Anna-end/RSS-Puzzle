@@ -1,6 +1,6 @@
 import { ValidationLoginPage } from './ValidationLoginPage/ValidationLogin';
 import { createUIStartPage } from '../../pages/Start/SratrPage';
-
+import { closeStartPage } from '../Game/GameLogic';
 export class LoginFormManager {
   private currentLogin: boolean;
   private userData: { firstname?: string; surename?: string } = {};
@@ -11,10 +11,9 @@ export class LoginFormManager {
     this.userData = {};
     this.startBtn = undefined;
     this.buttonLogout = undefined;
-    this.init();
   }
 
-  private init() {
+  public init() {
     this.checkUserLoginStatus();
   }
 
@@ -30,7 +29,7 @@ export class LoginFormManager {
     }
   }
 
-  private showloginForm(): void {
+  public showloginForm(): void {
     const loginPage = new ValidationLoginPage();
     this.setupSubmitHandler(loginPage);
   }
@@ -87,6 +86,7 @@ export class LoginFormManager {
   private updateUIAfterLogin(): void {
     const container = document.getElementById('app') || document.body;
     container.innerHTML = '';
+    this.currentLogin = true;
     this.showStartPage();
   }
 
@@ -108,6 +108,7 @@ export class LoginFormManager {
     this.startBtn = startBtn;
     this.buttonLogout = logoutBtn;
     this.setupLogoutHandler();
+    this.setupLoginHandler();
   }
   private setupLogoutHandler() {
     if (this.buttonLogout) {
@@ -120,6 +121,16 @@ export class LoginFormManager {
     }
   }
 
+  private setupLoginHandler() {
+    if (this.startBtn) {
+      const newButton = this.startBtn.cloneNode(true) as HTMLElement;
+      this.startBtn.replaceWith(newButton);
+      this.startBtn = newButton;
+      this.startBtn.addEventListener('click', async () => {
+        closeStartPage();
+      });
+    }
+  }
   public performLogout() {
     localStorage.removeItem('userData');
     this.currentLogin = false;

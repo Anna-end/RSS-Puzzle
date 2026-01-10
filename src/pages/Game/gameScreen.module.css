@@ -76,3 +76,25 @@ main {
     padding: 0px;
   }
 }
+
+.game__exit {
+  max-width: 50px;
+  min-width: 10vh;
+  margin-left: 50px;
+  background: #004b9bf9;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.game__exit:hover {
+  background-color: #4338ca;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(79, 70, 229, 0.2);
+}
+
+.game__container.hidden {
+  display: none;
+}
