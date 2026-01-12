@@ -1,14 +1,15 @@
 import { ValidationLoginPage } from './ValidationLoginPage/ValidationLogin';
-import { createUIStartPage } from '../../pages/Start/sratrPage';
+import { createUIStartPage } from '../../pages/Start/SratrPage';
 
 export class LoginFormManager {
   private currentLogin: boolean;
   private userData: { firstname?: string; surename?: string } = {};
   buttonLogout?: HTMLElement;
-
+  startBtn?: HTMLElement;
   constructor() {
     this.currentLogin = false;
     this.userData = {};
+    this.startBtn = undefined;
     this.buttonLogout = undefined;
     this.init();
   }
@@ -103,11 +104,11 @@ export class LoginFormManager {
   }
 
   private showStartPage() {
-    const { logoutBtn } = createUIStartPage();
+    const { logoutBtn, startBtn } = createUIStartPage();
+    this.startBtn = startBtn;
     this.buttonLogout = logoutBtn;
     this.setupLogoutHandler();
   }
-
   private setupLogoutHandler() {
     if (this.buttonLogout) {
       const newButton = this.buttonLogout.cloneNode(true) as HTMLElement;
