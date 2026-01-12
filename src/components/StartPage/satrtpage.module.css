@@ -1,0 +1,40 @@
+.start_page__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+.start_page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+  box-shadow: inset -10px -3px 14px 5px rgba(0, 0, 0, 0.4);
+}
+.start_page__title {
+  color: white;
+}
+.startPge__text {
+  color: white;
+}
+.start_page__sartBtn {
+  max-width: 150px;
+  padding: 10px;
+  background: #004b9bf9;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.start_page__logoutBtn {
+  max-width: 150px;
+  padding: 10px;
+  background: #004b9bf9;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+}

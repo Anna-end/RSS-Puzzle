@@ -1,0 +1,92 @@
+body {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url('https://ir.ozone.ru/s3/multimedia-8/6397273364.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+.form_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  opacity: 1;
+  pointer-events: auto;
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease;
+}
+
+.form_container.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-20px);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  box-shadow: inset -10px -3px 14px 5px rgba(0, 0, 0, 0.4);
+}
+
+.form_input_container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.form_input {
+  flex-grow: 1;
+  padding: 10px 12px;
+  background-color: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  color: #f9f8f8;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+.form_input:focus {
+  outline: none;
+  border-color: #007bff46;
+}
+
+.form_lable {
+  white-space: nowrap;
+  flex-basis: 20%;
+  font-size: 18px;
+  margin-bottom: 5px;
+  color: #fff9f9;
+}
+
+.form_btn {
+  max-width: 150px;
+  padding: 10px;
+  background: #004b9bf9;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.form_btn:hover {
+  background: #0056b3;
+}
+
+@media (max-width: 355px) {
+  .form_input_container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .form_input_container {
+    gap: 0;
+  }
+}
