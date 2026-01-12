@@ -2,7 +2,7 @@ import styles from './DragDrop.module.css';
 
 type DragEventHandler = (this: HTMLElement, e: DragEvent) => void;
 
-export function addDragDropLogic(numberSentense: number): void {
+export function addDragDropLogic(): void {
   let draggedElement: HTMLElement | null = null;
 
   const dragStart: DragEventHandler = function (this: HTMLElement, e: DragEvent) {
@@ -71,13 +71,9 @@ export function addDragDropLogic(numberSentense: number): void {
     this.classList.add(styles.drop);
 
     this.classList.remove(styles.initial);
+
     this.appendChild(draggedElement);
 
-    const node = this.firstChild;
-    if (node && node.nodeType === Node.ELEMENT_NODE) {
-      const elem = node as Element;
-      elem.setAttribute('data', 'check');
-    }
     setTimeout(() => {
       this.classList.remove(styles.drop);
     }, 300);
@@ -95,29 +91,32 @@ export function addDragDropLogic(numberSentense: number): void {
     dragElem.addEventListener('dragend', dragEnd as EventListener);
     dragElem.classList.add(styles.dragElement);
 
-    const dropElements: NodeListOf<HTMLElement> = document.querySelectorAll<HTMLElement>(
-      `[datadrop="${numberSentense}"]`
-    );
-    for (const container of dragContainer) {
-      container.setAttribute('droppable', 'true');
-      container.addEventListener('dragenter', dragEnter as EventListener);
-      container.addEventListener('dragleave', dragLeave as EventListener);
-      container.addEventListener('dragover', dragOver as EventListener);
-      container.addEventListener('drop', drop as EventListener);
+    const numberSentense = dragElem.getAttribute('datadrag');
+    if (numberSentense) {
+      const dropElements: NodeListOf<HTMLElement> = document.querySelectorAll<HTMLElement>(
+        `[datadrop="${numberSentense}"]`
+      );
+      for (const container of dragContainer) {
+        container.setAttribute('droppable', 'true');
+        container.addEventListener('dragenter', dragEnter as EventListener);
+        container.addEventListener('dragleave', dragLeave as EventListener);
+        container.addEventListener('dragover', dragOver as EventListener);
+        container.addEventListener('drop', drop as EventListener);
 
-      if (container.children.length === 0) {
-        container.classList.add(styles.initial);
+        if (container.children.length === 0) {
+          container.classList.add(styles.initial);
+        }
       }
-    }
-    for (const dropElement of dropElements) {
-      dropElement.setAttribute('droppable', 'true');
-      dropElement.addEventListener('dragenter', dragEnter as EventListener);
-      dropElement.addEventListener('dragleave', dragLeave as EventListener);
-      dropElement.addEventListener('dragover', dragOver as EventListener);
-      dropElement.addEventListener('drop', drop as EventListener);
+      for (const dropElement of dropElements) {
+        dropElement.setAttribute('droppable', 'true');
+        dropElement.addEventListener('dragenter', dragEnter as EventListener);
+        dropElement.addEventListener('dragleave', dragLeave as EventListener);
+        dropElement.addEventListener('dragover', dragOver as EventListener);
+        dropElement.addEventListener('drop', drop as EventListener);
 
-      if (dropElement.children.length === 0) {
-        dropElement.classList.add(styles.initial);
+        if (dropElement.children.length === 0) {
+          dropElement.classList.add(styles.initial);
+        }
       }
     }
   }

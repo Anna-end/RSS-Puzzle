@@ -71,10 +71,3 @@ h3 {
 .start_page__container.hidden {
   display: none;
 }
-.error {
-  background-color: red;
-}
-
-.active {
-  background-color: #fffafa8e;
-}
