@@ -1,4 +1,4 @@
-import { createUILoginPage } from '../LoginPageUI';
+import { createUILoginPage } from '../../../pages/Login/LoginPage';
 import styles from './ValidationLogin.module.css';
 import { CreatorElement } from '../../../utils/element-creator';
 

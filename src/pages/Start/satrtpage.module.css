@@ -1,0 +1,73 @@
+h1,
+h2,
+h3 {
+  margin: 0;
+}
+.start_page__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+.start_page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+}
+.start_page__greeting {
+  margin-bottom: 20px;
+  color: white;
+  font-weight: 100;
+}
+.start_page__title {
+  color: white;
+}
+.startPge__text {
+  color: white;
+  text-align: center;
+}
+.start_page__sartBtn {
+  max-width: 150px;
+  min-width: 50vh;
+  padding: 10px;
+  background: #004b9bf9;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.start_page__sartBtn:hover {
+  background-color: #4338ca;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(79, 70, 229, 0.2);
+}
+
+.start_page__sartBtn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(79, 70, 229, 0.2);
+  transition: transform 0.1s ease;
+}
+
+.start_page__sartBtn:focus {
+  outline: 2px solid #4f46e5;
+  outline-offset: 2px;
+}
+.start_page__logoutBtn {
+  max-width: 150px;
+  min-width: 50vh;
+  padding: 10px;
+  margin: 10px;
+  background: #040f1b72;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.start_page__container.hidden {
+  display: none;
+}
