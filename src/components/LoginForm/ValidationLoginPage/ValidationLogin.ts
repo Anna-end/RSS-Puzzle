@@ -20,6 +20,7 @@ export class ValidationLoginPage {
     this.elements.containerForSurname.appendChild(this.surnameError);
 
     this.setupEventListeners();
+    this.getUserDataObject();
   }
 
   private createErrorElement(forAttribute: string): HTMLDivElement {
