@@ -16,7 +16,6 @@
   opacity: 0.6;
 }
 
-/* Стиль для перетаскиваемых элементов */
 .dragElement {
   display: inline-block;
   white-space: nowrap;
@@ -28,13 +27,11 @@
   border-color: #666;
 }
 
-/* Когда элемент над контейнером */
 .hovered:not(.disabled) {
   background-color: #f0f8ff;
   border-color: #2196f3;
 }
 
-/* Когда элемент упал в контейнер */
 .drop {
   border-style: solid;
   background-color: #f1f8e9;

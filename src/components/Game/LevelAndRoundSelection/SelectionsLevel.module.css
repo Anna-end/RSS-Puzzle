@@ -1,0 +1,15 @@
+select {
+  border-radius: 5px;
+  background: #f0f8ff00;
+  color: white;
+}
+select option {
+  border-radius: 5px;
+  background: #f0f8ff00;
+  color: rgb(0, 0, 0);
+}
+
+select option:checked {
+  background-color: #4a90e2;
+  color: white;
+}

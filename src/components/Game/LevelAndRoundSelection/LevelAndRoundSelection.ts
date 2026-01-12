@@ -1,5 +1,5 @@
-import { startGame } from '../Game/GameLogic';
-import { CreatorElement } from '../../utils/element-creator';
+import { startGame } from '../GameLogic';
+import { CreatorElement } from '../../../utils/element-creator';
 import styles from './SelectionsLevel.module.css';
 
 export function createSelectLevel() {

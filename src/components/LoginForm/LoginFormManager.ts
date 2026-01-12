@@ -16,7 +16,6 @@ export class LoginFormManager {
   public init() {
     this.checkUserLoginStatus();
   }
-
   private checkUserLoginStatus() {
     const savedUser = this.getUserFromLocalStorage();
     if (savedUser && savedUser.firstname && savedUser.surename) {
@@ -110,6 +109,7 @@ export class LoginFormManager {
     this.setupLogoutHandler();
     this.setupLoginHandler();
   }
+
   private setupLogoutHandler() {
     if (this.buttonLogout) {
       const newButton = this.buttonLogout.cloneNode(true) as HTMLElement;
@@ -126,7 +126,7 @@ export class LoginFormManager {
       const newButton = this.startBtn.cloneNode(true) as HTMLElement;
       this.startBtn.replaceWith(newButton);
       this.startBtn = newButton;
-      this.startBtn.addEventListener('click', async () => {
+      this.startBtn.addEventListener('click', () => {
         closeStartPage();
       });
     }

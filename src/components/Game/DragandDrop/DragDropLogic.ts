@@ -29,7 +29,6 @@ export function addDragDropLogic(numberSentense: number): void {
   const dragEnter: DragEventHandler = function (this: HTMLElement, e: DragEvent) {
     e.preventDefault();
 
-    // Если в контейнере уже есть элемент, блокируем дроп
     const hasChild = this.children.length > 0 && !this.classList.contains(styles.dragElement);
     if (hasChild) {
       this.classList.add(styles.disabled);

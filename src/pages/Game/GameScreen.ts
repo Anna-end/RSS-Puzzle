@@ -11,6 +11,13 @@ export function gameScreenUi() {
   const game = CreatorElement.createElement('div', {
     classes: [styless.game],
   });
+  const translation = CreatorElement.createElement('button', {
+    textContent: 'Translation',
+    classes: [styless.translation_btn],
+    attributes: {
+      data: 'translation',
+    },
+  });
   const gameScreenHeader = CreatorElement.createElement('header', {
     classes: [styless.game__header, styless.container],
   });
@@ -37,6 +44,13 @@ export function gameScreenUi() {
   const gameField = CreatorElement.createElement('div', {
     classes: [styless.game__field],
   });
+  const hintArea = CreatorElement.createElement('div', {
+    classes: [styless.hintArea],
+    textContent: 'Translation:',
+    attributes: {
+      data: 'hintArea',
+    },
+  });
   const gameArea = CreatorElement.createElement('div', {
     classes: [styless.game__area],
     attributes: {
@@ -50,8 +64,8 @@ export function gameScreenUi() {
     },
   });
   game.append(gameScreenHeader, gameScreenMain);
-  gameScreenHeader.append(gameLevel, gameRound, buttonExit);
-  gameField.append(gameArea);
+  gameScreenHeader.append(translation, gameLevel, gameRound, buttonExit);
+  gameField.append(gameArea, hintArea);
   gameScreenMain.append(gameField, mixedWordsArea);
   gameScreenContainer.append(game);
   document.body.append(gameScreenContainer);

@@ -64,3 +64,17 @@ export async function getAllTextExamples(
   }
   return [];
 }
+
+export async function getAllTextExamplesTranslations(
+  levelNumber: number,
+  roundNumber: number
+): Promise<string[]> {
+  const roundData = await getDataRound(levelNumber, roundNumber);
+
+  if (roundData && roundData.words) {
+    return roundData.words
+      .map((word) => word.textExampleTranslate)
+      .filter((text): text is string => text !== undefined);
+  }
+  return [];
+}

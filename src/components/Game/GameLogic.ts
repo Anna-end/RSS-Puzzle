@@ -1,4 +1,4 @@
-import { getAllTextExamples } from '../../utils/recipient-sentence';
+import { getAllTextExamples, getAllTextExamplesTranslations } from '../../utils/recipient-sentence';
 import {
   createBoardGameWithSentence,
   createMixWords,
@@ -10,8 +10,9 @@ import stylessBtn from '../../components/button/continueBtn.module.css';
 import { addDragDropLogic } from '../Game/DragandDrop/DragDropLogic';
 import { createContinueBtn } from '../button/ContinueButton';
 import { addDragDropLogicMobile } from '../Game/DragandDrop/DragDropMobile';
-import { initSelectors } from '../LevelAndRoundSelection/LevelAndRoundSelection';
+import { initSelectors } from './LevelAndRoundSelection/LevelAndRoundSelection';
 import stylessGamePage from '../../pages/Game/GameScreen.module.css';
+import { getTranslation } from '../Game/Hint/translationLogic';
 
 export async function closeStartPage() {
   const startPage = document.querySelector('[data="login"]');
@@ -22,16 +23,17 @@ export async function closeStartPage() {
   }
 }
 
-export async function createstartGamePage() {
+export async function createGamePage() {
   gameScreenUi();
   startGame(1, 0);
   await initSelectors();
   backStartPage();
 }
+
 export async function startGame(numLevel: number, numRound: number) {
   try {
     const dataRound: string[] = await getAllTextExamples(numLevel, numRound);
-
+    const arrTranslations = await getAllTextExamplesTranslations(numLevel, numRound);
     if (dataRound && dataRound.length > 0) {
       let sentence = 0;
       createBoardGameWithSentence(dataRound);
@@ -39,8 +41,10 @@ export async function startGame(numLevel: number, numRound: number) {
       function createGameLogicForRound() {
         createMixWords(dataRound, sentence);
         addDragDropLogic(sentence);
+        console.log(arrTranslations[0]);
         addDragDropLogicMobile(sentence);
         createContinueBtn(sentence);
+        getTranslation(arrTranslations, sentence);
         check();
       }
       function check() {
@@ -69,6 +73,10 @@ export async function startGame(numLevel: number, numRound: number) {
           }
           button.classList.add(stylessBtn.complite);
           sentence += 1;
+          const sentenceTranslation = document.querySelector('[data="hintArea"]');
+          if (sentenceTranslation) {
+            sentenceTranslation.textContent = '';
+          }
           console.log(sentence);
           if (sentenceBuilder) {
             sentenceBuilder.innerHTML = '';

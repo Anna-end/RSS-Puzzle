@@ -98,3 +98,30 @@ main {
 .game__container.hidden {
   display: none;
 }
+.translation_btn {
+  border: solid 1px white;
+  font-size: 15px;
+  font-weight: 100;
+  border-radius: 5px;
+  margin-left: 50px;
+  background: #fffafa00;
+  color: rgb(255, 253, 253);
+  border-radius: 6px;
+  cursor: pointer;
+  margin-right: 20px;
+}
+.translation_btn:hover {
+  background-color: #4338ca;
+  box-shadow: inset 3px;
+}
+.hintArea {
+  padding: 10px;
+  margin-top: 20px;
+  border: 1px dashed #999;
+  color: #9b9696;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+}
