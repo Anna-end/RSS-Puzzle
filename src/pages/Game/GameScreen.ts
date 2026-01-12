@@ -3,7 +3,10 @@ import styless from './gameScreen.module.css';
 
 export function gameScreenUi() {
   const gameScreenContainer = CreatorElement.createElement('div', {
-    classes: [styless.game__container],
+    classes: [styless.game__container, styless.hidden],
+    attributes: {
+      data: 'hidden-game',
+    },
   });
   const game = CreatorElement.createElement('div', {
     classes: [styless.game],
@@ -11,13 +14,22 @@ export function gameScreenUi() {
   const gameScreenHeader = CreatorElement.createElement('header', {
     classes: [styless.game__header, styless.container],
   });
-  const gameLevel = CreatorElement.createElement('div', {
+  const gameLevel = CreatorElement.createElement('select', {
     classes: [styless.game__level],
     textContent: 'level: 1',
+    id: 'level',
   });
-  const gameRound = CreatorElement.createElement('div', {
+  const gameRound = CreatorElement.createElement('select', {
     classes: [styless.game__round],
     textContent: 'round: 1',
+    id: 'round',
+  });
+  const buttonExit = CreatorElement.createElement('button', {
+    classes: [styless.game__exit],
+    textContent: 'Exit',
+    attributes: {
+      data: 'exit',
+    },
   });
   const gameScreenMain = CreatorElement.createElement('main', {
     classes: [styless.main, styless.container],
@@ -38,7 +50,7 @@ export function gameScreenUi() {
     },
   });
   game.append(gameScreenHeader, gameScreenMain);
-  gameScreenHeader.append(gameLevel, gameRound);
+  gameScreenHeader.append(gameLevel, gameRound, buttonExit);
   gameField.append(gameArea);
   gameScreenMain.append(gameField, mixedWordsArea);
   gameScreenContainer.append(game);

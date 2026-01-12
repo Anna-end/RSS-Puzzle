@@ -19,7 +19,7 @@ export function createUIStartPage() {
   const sartPageContainer = CreatorElement.createElement('div', {
     classes: [styles.start_page__container],
     attributes: {
-      data: 'hidden',
+      data: 'login',
     },
   });
   const startPage = CreatorElement.createElement('div', {

@@ -6,7 +6,7 @@ body {
   padding: 0;
 }
 main {
-  width: 70%;
+  width: 85%;
 }
 .game__container {
   display: flex;
@@ -45,7 +45,56 @@ main {
   border-radius: 10px;
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   align-items: center;
-  height: 6vh;
   gap: 3px;
+}
+
+.error {
+  background-color: red;
+}
+
+.active {
+  background-color: #fffafa8e;
+}
+
+@media (max-width: 700px) {
+  .game {
+    width: 90%;
+  }
+  main {
+    width: 90%;
+  }
+}
+
+@media (max-width: 430px) {
+  .game {
+    width: 100%;
+  }
+  .game__field {
+    margin-bottom: 0px;
+    padding: 0px;
+  }
+}
+
+.game__exit {
+  max-width: 50px;
+  min-width: 10vh;
+  margin-left: 50px;
+  background: #004b9bf9;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.game__exit:hover {
+  background-color: #4338ca;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(79, 70, 229, 0.2);
+}
+
+.game__container.hidden {
+  display: none;
 }

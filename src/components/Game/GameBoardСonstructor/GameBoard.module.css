@@ -14,4 +14,44 @@
   transition: width 0.2s ease;
   display: inline-flex;
   align-items: center;
+
+  animation: pulse 2s infinite;
+}
+.word_cng__container {
+  box-shadow: -4px 4px 10px 3px rgb(64 0 0 / 26%);
+  padding: 3px;
+  justify-content: space-around;
+  min-height: 20px;
+  min-width: 40px;
+  border: 1px dashed #999;
+  border-radius: 4px;
+  transition: width 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+}
+.word_cng__container:hover {
+  box-shadow: -4px 4px 10px 3px rgba(40, 10, 10, 0.723);
+}
+
+.word_cng__container:focus {
+  background-color: rgba(0, 0, 0, 0.137);
+}
+
+.game__word.active.error {
+  border: 1px solid #841616;
+}
+
+.game__word.active {
+  background-color: #ffffffa8;
+}
+
+@media (max-width: 580px) {
+  .game__word {
+    min-width: 30px;
+  }
+}
+@media (max-width: 320px) {
+  .game__word {
+    min-width: 25px;
+  }
 }

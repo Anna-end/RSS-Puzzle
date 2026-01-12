@@ -39,3 +39,12 @@
   border-style: solid;
   background-color: #f1f8e9;
 }
+
+.active {
+  background-color: #f0f8ff82;
+}
+.dragClone {
+  opacity: 0.7;
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}

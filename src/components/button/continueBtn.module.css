@@ -1,5 +1,4 @@
 .continue_btn {
-  /* Базовые стили */
   position: relative;
   text-transform: uppercase;
   border: none;
@@ -12,11 +11,9 @@
   overflow: hidden;
   outline: none;
 
-  /* Анимация */
   animation: pulse 2s infinite;
 }
 
-/* Эффект блеска при наведении */
 .continue_btn::before {
   content: '';
   position: absolute;
@@ -33,7 +30,7 @@
 }
 
 .continue_btn.error {
-  background-color: red;
+  background-color: rgb(136, 32, 32);
 }
 .continue_btn.complite {
   background: linear-gradient(135deg, #d5d814ae, #26f4076b);
