@@ -1,5 +1,5 @@
 import { ValidationLoginPage } from './ValidationLoginPage/ValidationLogin';
-import { createUIStartPage } from '../../pages/Start/SratrPage';
+import { createUIStartPage } from '../../pages/Start/sratrPage';
 import { closeStartPage } from '../Game/GameLogic';
 export class LoginFormManager {
   private currentLogin: boolean;
