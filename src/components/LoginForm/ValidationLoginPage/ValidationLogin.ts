@@ -1,175 +1,205 @@
 import { createUILoginPage } from '../../../pages/Login/LoginPage';
 import styles from './ValidationLogin.module.css';
 import { CreatorElement } from '../../../utils/element-creator';
+export const arrOfDataUser: string[] = [];
 
-export class ValidationLoginPage {
-  private elements;
-  private firstNameError: HTMLDivElement;
-  private surnameError: HTMLDivElement;
-  private nameRegex: RegExp;
-  private firstname: string = '';
-  private surename: string = '';
-  constructor() {
-    this.elements = createUILoginPage();
-    this.nameRegex = /^[A-Z][A-Za-z-]*$/;
+//Создает страницу валидации, элементы для отображения ошибок и объявлет функцию которая вешает слушатели событий
+export function createValidationLoginPage(): void {
+  createUILoginPage();
 
-    this.firstNameError = this.createErrorElement('firstName');
-    this.surnameError = this.createErrorElement('surname');
+  const { firstNameError, surnameError } = createErrorElements();
+  setupEventListeners(firstNameError, surnameError);
+}
 
-    this.elements.containerForFirstName.appendChild(this.firstNameError);
-    this.elements.containerForSurname.appendChild(this.surnameError);
+//Собирает элементы, которые будут использоваться для слушателей событий
+function setupEventListeners(firstNameError: HTMLDivElement, surnameError: HTMLDivElement): void {
+  const firstNameInput = document.querySelector<HTMLInputElement>('[name="firstName"]');
+  const surnameInput = document.querySelector<HTMLInputElement>('[name="surName"]');
 
-    this.setupEventListeners();
-    this.getUserDataObject();
+  if (!firstNameInput || !surnameInput) {
+    console.error('Could not find the input fields');
+    return;
   }
 
-  private createErrorElement(forAttribute: string): HTMLDivElement {
-    return CreatorElement.createElement('div', {
-      classes: [styles.error_popup],
-      textContent: '',
-      attributes: { 'data-error-for': forAttribute },
-    }) as HTMLDivElement;
+  setupInputValidation(firstNameInput, surnameInput, firstNameError, surnameError);
+}
+// Цепляем слушатели событий
+function setupInputValidation(
+  firstNameInput: HTMLInputElement,
+  surnameInput: HTMLInputElement,
+  firstNameError: HTMLDivElement,
+  surnameError: HTMLDivElement
+): void {
+  firstNameInput.addEventListener('blur', () => handleInputValidation('firstName'));
+  firstNameInput.addEventListener('focus', () => hideErrorIfFocus(firstNameInput, firstNameError));
+
+  surnameInput.addEventListener('blur', () => handleInputValidation('surname'));
+  surnameInput.addEventListener('focus', () => hideErrorIfFocus(surnameInput, surnameError));
+}
+
+//функция, которая позволяет начать работать отдельно с разными полями инпутов
+function handleInputValidation(fieldType: 'firstName' | 'surname'): void {
+  validateField(fieldType);
+}
+//Объявляет функцию validateAndDisplayResult и передает все необходимые ей аргументы для начала валидации
+function validateField(fieldType: 'firstName' | 'surname'): void {
+  const firstNameInput = document.querySelector<HTMLInputElement>('[name="firstName"]');
+  const surnameInput = document.querySelector<HTMLInputElement>('[name="surName"]');
+  const firstNameError = document.querySelector<HTMLDivElement>('[data-error-for="firstName"]');
+  const surnameError = document.querySelector<HTMLDivElement>('[data-error-for="surName"]');
+
+  if (!firstNameInput || !surnameInput || !firstNameError || !surnameError) {
+    console.error('Required elements not found for validation');
+    return;
   }
 
-  private setupEventListeners() {
-    this.elements.userFormInputFirstName.addEventListener('blur', () => {
-      this.handleInputValidation('firstName');
-    });
-    this.elements.userFormInputFirstName.addEventListener('focus', () => {
-      this.hideErrorIfFocus(this.elements.userFormInputFirstName, this.firstNameError);
-    });
-
-    this.elements.userFormInputSurname.addEventListener('blur', () => {
-      this.handleInputValidation('surname');
-    });
-    this.elements.userFormInputSurname.addEventListener('focus', () => {
-      this.hideErrorIfFocus(this.elements.userFormInputSurname, this.surnameError);
-    });
-  }
-
-  private handleInputValidation(fieldType: 'firstName' | 'surname') {
-    this.validateField(fieldType);
-  }
-
-  private validateField(fieldType: 'firstName' | 'surname') {
-    let input: HTMLInputElement;
-    let errorElement: HTMLDivElement;
-    let validationResult: { isValid: boolean; errors: string[] };
-    let valueOfInput: string;
-    if (fieldType === 'firstName') {
-      input = this.elements.userFormInputFirstName;
-      valueOfInput = input.value.trim();
-      errorElement = this.firstNameError;
-      validationResult = this.validateFirstName(valueOfInput);
-      if (validationResult.isValid === true) {
-        this.firstname = valueOfInput;
-      }
-    } else {
-      input = this.elements.userFormInputSurname;
-      valueOfInput = input.value.trim();
-      errorElement = this.surnameError;
-      validationResult = this.validateSurname(valueOfInput);
-      if (validationResult.isValid === true) {
-        this.surename = valueOfInput;
-      }
-    }
-
-    if (!validationResult.isValid) {
-      this.showError(input, errorElement, validationResult.errors);
-    } else {
-      this.hideError(input, errorElement);
-    }
-  }
-
-  validateFirstName(value: string): { isValid: boolean; errors: string[] } {
-    const errors: string[] = [];
-
-    if (!value) {
-      errors.push('The name is required to fill in');
-      return { isValid: false, errors };
-    }
-
-    if (value.length < 3) {
-      errors.push('The name must contain at least 3 characters.');
-    }
-
-    if (!this.nameRegex.test(value)) {
-      errors.push('Only English letters. The first letter is capitalized');
-    }
-
-    if (value.startsWith('-') || value.endsWith('-')) {
-      errors.push('A hyphen cannot be placed at the beginning or end of a name.');
-    }
-
-    if (value.includes('--')) {
-      errors.push('You cannot use two hyphens in a row.');
-    }
-
-    return {
-      isValid: errors.length === 0,
-      errors,
-    };
-  }
-
-  validateSurname(value: string): { isValid: boolean; errors: string[] } {
-    const errors: string[] = [];
-
-    if (!value) {
-      errors.push('Last name is required');
-      return { isValid: false, errors };
-    }
-
-    if (value.length < 4) {
-      errors.push('The last name must contain at least 4 characters.');
-    }
-
-    if (!this.nameRegex.test(value)) {
-      errors.push('Only English letters. The first letter is capitalized');
-    }
-
-    if (value.startsWith('-') || value.endsWith('-')) {
-      errors.push('A hyphen cannot be placed at the beginning or end of a surname.');
-    }
-
-    if (value.includes('--')) {
-      errors.push('You cannot use two hyphens in a row.');
-    }
-
-    return {
-      isValid: errors.length === 0,
-      errors,
-    };
-  }
-
-  showError(input: HTMLInputElement, errorElement: HTMLElement, messages: string[]) {
-    errorElement.textContent = messages.join('. ');
-    input.classList.add(styles.input_error);
-    errorElement.classList.add(styles.error_visible);
-  }
-
-  hideError(input: HTMLInputElement, errorElement: HTMLElement) {
-    errorElement.textContent = '';
-    input.classList.remove(styles.input_error);
-    errorElement.classList.remove(styles.error_visible);
-  }
-
-  hideErrorIfFocus(input: HTMLInputElement, errorElement: HTMLElement) {
-    errorElement.textContent = '';
-    input.classList.remove(styles.input_error);
-    errorElement.classList.remove(styles.error_visible);
-  }
-
-  public getUserDataObject(): { firstname?: string; surename?: string } {
-    const objForDataName: {
-      firstname?: string;
-      surename?: string;
-    } = {};
-    if (this.firstname) {
-      objForDataName.firstname = this.firstname;
-    }
-    if (this.surename) {
-      objForDataName.surename = this.surename;
-    }
-    return objForDataName;
+  if (fieldType === 'firstName') {
+    validateAndDisplayResult(firstNameInput, firstNameError, validateFirstName); //в аргументы передается инпут, ошибки и функция проверки
+  } else {
+    validateAndDisplayResult(surnameInput, surnameError, validateSurname); //в аргументы передается инпут, ошибки и функция проверки
   }
 }
+//Вытаскивает текст из инпута и проверяет его на соответсвие при помощи validationFunction,
+// возвращает boolean и/или массив ошибок, после, если не верно, выдает ошибку
+function validateAndDisplayResult(
+  input: HTMLInputElement,
+  errorElement: HTMLDivElement,
+  validationFunction: (value: string) => { isValid: boolean; errors: string[] }
+): void {
+  const value = input.value.trim();
+  const validationResult = validationFunction(value);
+
+  if (!validationResult.isValid) {
+    showError(input, errorElement, validationResult.errors);
+  } else {
+    hideError(input, errorElement);
+  }
+}
+
+function showError(
+  input: HTMLInputElement,
+  errorElement: HTMLElement,
+  errorMessages: string[]
+): void {
+  errorElement.textContent = errorMessages.join('. ');
+  input.classList.add(styles.input_error);
+  errorElement.classList.add(styles.error_visible);
+}
+
+function hideError(input: HTMLInputElement, errorElement: HTMLElement): void {
+  errorElement.textContent = '';
+  input.classList.remove(styles.input_error);
+  errorElement.classList.remove(styles.error_visible);
+}
+
+function hideErrorIfFocus(input: HTMLInputElement, errorElement: HTMLElement): void {
+  hideError(input, errorElement);
+}
+
+// Функция, которая вызывается в начале и добавляет созданные элементы для отображения ошибок в ДОМ
+function createErrorElements(): { firstNameError: HTMLDivElement; surnameError: HTMLDivElement } {
+  const firstNameContainer = document.querySelector('[container="firstName"]');
+  const surnameContainer = document.querySelector('[container="surName"]');
+
+  const firstNameError = createErrorElement('firstName');
+  const surnameError = createErrorElement('surName');
+
+  if (firstNameContainer && surnameContainer) {
+    firstNameContainer.appendChild(firstNameError);
+    surnameContainer.appendChild(surnameError);
+  } else {
+    console.error('Containers for first or last name not found');
+  }
+
+  return { firstNameError, surnameError };
+}
+// Создает элеметы ошибок
+function createErrorElement(forAttribute: string): HTMLDivElement {
+  return CreatorElement.createElement('div', {
+    classes: [styles.error_popup],
+    textContent: '',
+    attributes: { 'data-error-for': forAttribute },
+  }) as HTMLDivElement;
+}
+
+// ОСНОВНАЯ ПРОВЕРКА НА ВАЛИДАЦИЮ
+
+function validateFirstName(value: string): { isValid: boolean; errors: string[] } {
+  const errors: string[] = [];
+  const nameRegex = /^[A-Z][A-Za-z-]*$/;
+
+  if (!value) {
+    errors.push('The name is required to fill in');
+    return { isValid: false, errors };
+  }
+
+  if (value.length < 3) {
+    errors.push('The name must contain at least 3 characters.');
+  }
+
+  if (!nameRegex.test(value)) {
+    errors.push('Only English letters. The first letter is capitalized');
+  }
+
+  if (value.startsWith('-') || value.endsWith('-')) {
+    errors.push('A hyphen cannot be placed at the beginning or end of a name.');
+  }
+
+  if (value.includes('--')) {
+    errors.push('You cannot use two hyphens in a row.');
+  }
+
+  return {
+    isValid: errors.length === 0,
+    errors,
+  };
+}
+
+function validateSurname(value: string): { isValid: boolean; errors: string[] } {
+  const errors: string[] = [];
+  const nameRegex = /^[A-Z][A-Za-z-]*$/;
+
+  if (!value) {
+    errors.push('Last name is required');
+    return { isValid: false, errors };
+  }
+
+  if (value.length < 4) {
+    errors.push('The last name must contain at least 4 characters.');
+  }
+
+  if (!nameRegex.test(value)) {
+    errors.push('Only English letters. The first letter is capitalized');
+  }
+
+  if (value.startsWith('-') || value.endsWith('-')) {
+    errors.push('A hyphen cannot be placed at the beginning or end of a surname.');
+  }
+
+  if (value.includes('--')) {
+    errors.push('You cannot use two hyphens in a row.');
+  }
+
+  return {
+    isValid: errors.length === 0,
+    errors,
+  };
+}
+
+// Отдельная функция для export, чтобы проверять валидацию
+export function validateAllFormFields(): boolean {
+  const firstNameInput = document.querySelector<HTMLInputElement>('[name="firstName"]');
+  const surnameInput = document.querySelector<HTMLInputElement>('[name="surName"]');
+
+  if (!firstNameInput || !surnameInput) {
+    return false;
+  }
+
+  const firstNameResult = validateFirstName(firstNameInput.value.trim());
+  const surnameResult = validateSurname(surnameInput.value.trim());
+
+  return firstNameResult.isValid && surnameResult.isValid;
+}
+
+// Экспортируем функции валидации
+export { validateFirstName, validateSurname };

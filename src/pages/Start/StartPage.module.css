@@ -1,3 +1,12 @@
+body {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url('https://ir.ozone.ru/s3/multimedia-8/6397273364.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  min-height: 100vh;
+}
 h1,
 h2,
 h3 {

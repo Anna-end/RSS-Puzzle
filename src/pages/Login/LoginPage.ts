@@ -14,9 +14,15 @@ export function createUILoginPage() {
   // Add container for input and lable
   const containerForFirstName = CreatorElement.createElement('div', {
     classes: [styles.form_input_container],
+    attributes: {
+      container: 'firstName',
+    },
   });
   const containerForSurname = CreatorElement.createElement('div', {
     classes: [styles.form_input_container],
+    attributes: {
+      container: 'surName',
+    },
   });
 
   // Add inpur lable of first name
@@ -39,7 +45,7 @@ export function createUILoginPage() {
     classes: [styles.form_input],
     attributes: {
       type: 'text',
-      name: 'surname',
+      name: 'surName',
       placeholder: 'Enter surname',
     },
   });

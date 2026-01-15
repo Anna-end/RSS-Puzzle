@@ -51,7 +51,7 @@ export async function getDataRound(
   }
 }
 
-export async function getAllTextExamples(
+export async function getAllTextExamplesInEnglish(
   levelNumber: number,
   roundNumber: number
 ): Promise<string[]> {

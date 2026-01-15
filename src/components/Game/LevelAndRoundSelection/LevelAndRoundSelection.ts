@@ -1,4 +1,4 @@
-import { startGame } from '../GameLogic';
+import { createGamePageLogic } from '../GameLogic';
 import { CreatorElement } from '../../../utils/element-creator';
 import styles from './SelectionsLevel.module.css';
 
@@ -68,8 +68,6 @@ export async function createSelectRound(): Promise<void> {
 export async function initSelectors() {
   createSelectLevel();
 
-  await new Promise((resolve) => setTimeout(resolve, 0));
-
   await createSelectRound();
 
   setupEventListenersForLevel();
@@ -121,5 +119,5 @@ function resetGameAndStart(numLevel: number, numRound: number) {
     sentenceBuilder.innerHTML = '';
   }
 
-  startGame(numLevel, numRound);
+  createGamePageLogic(numLevel, numRound);
 }

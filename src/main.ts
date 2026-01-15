@@ -1,9 +1,31 @@
-import { LoginFormManager } from './components/LoginForm/LoginFormManager';
-import { createGamePage } from './components/Game/GameLogic';
+import {
+  checkUserLoginStatus,
+  setupLogoutHandler,
+  setupSubmitHandler,
+} from './components/LoginForm/LoginFormManager';
+import { createValidationLoginPage } from './components/LoginForm/ValidationLoginPage/ValidationLogin';
+import { createUIStartPage } from './pages/Start/sratrPage';
+import { setupStartHandler, createGamePage } from './components/Game/GameLogic';
 
-const LoginForm = new LoginFormManager();
-LoginForm.init();
-createGamePage();
+async function initializeApp() {
+  const isLoggedIn = checkUserLoginStatus();
+
+  if (isLoggedIn) {
+    createUIStartPage();
+    setupLogoutHandler();
+    setupStartHandler();
+  } else {
+    createValidationLoginPage();
+    setupSubmitHandler();
+  }
+}
+
+// Инициализируем приложение при загрузке
+document.addEventListener('DOMContentLoaded', initializeApp);
+
+//const LoginForm = new LoginFormManager();
+//LoginForm.init();
+//createGamePage();
 /** 
  * Вот таким образом не работает 
  * 

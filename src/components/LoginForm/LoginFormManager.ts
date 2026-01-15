@@ -1,152 +1,96 @@
-import { ValidationLoginPage } from './ValidationLoginPage/ValidationLogin';
 import { createUIStartPage } from '../../pages/Start/sratrPage';
-import { closeStartPage } from '../Game/GameLogic';
-export class LoginFormManager {
-  private currentLogin: boolean;
-  private userData: { firstname?: string; surename?: string } = {};
-  buttonLogout?: HTMLElement;
-  startBtn?: HTMLElement;
-  constructor() {
-    this.currentLogin = false;
-    this.userData = {};
-    this.startBtn = undefined;
-    this.buttonLogout = undefined;
+import {
+  createValidationLoginPage,
+  validateAllFormFields,
+} from './ValidationLoginPage/ValidationLogin';
+import { setupStartHandler } from '../Game/GameLogic';
+
+//функция, которая проверяет в main.ts есть ли юзер в локальном хранилище
+export function checkUserLoginStatus(): boolean {
+  const savedUser = getUserFromLocalStorage();
+  return !!(savedUser && savedUser.firstname && savedUser.surename);
+}
+
+function getUserFromLocalStorage(): { firstname: string; surename: string } | null {
+  try {
+    const userJson = localStorage.getItem('userData');
+    return userJson ? JSON.parse(userJson) : null;
+  } catch (error) {
+    console.error('Ошибка при чтении из Local Storage:', error);
+    return null;
+  }
+}
+// добавление обработчика событий на логаут, где мы удаляем данные из локального хранилища
+// очищаем страницу и пересоздаем страницу, где нужно залогиниться
+export function setupLogoutHandler(): void {
+  const logoutButton = document.getElementById('logout') as HTMLElement;
+  if (logoutButton) {
+    logoutButton.addEventListener('click', performLogout);
+  }
+}
+
+function performLogout(): void {
+  localStorage.removeItem('userData');
+
+  const container = document.body;
+  container.innerHTML = '';
+  createValidationLoginPage();
+  setupSubmitHandler();
+}
+
+export function setupSubmitHandler(): void {
+  const submitButton = document.querySelector('button[type="submit"]') as HTMLButtonElement;
+  if (!submitButton) {
+    console.error('Кнопка отправки не найдена!');
+    return;
   }
 
-  public init() {
-    this.checkUserLoginStatus();
-  }
-  private checkUserLoginStatus() {
-    const savedUser = this.getUserFromLocalStorage();
-    if (savedUser && savedUser.firstname && savedUser.surename) {
-      this.currentLogin = true;
-      this.userData = savedUser;
-      this.showStartPage();
-    } else {
-      this.currentLogin = false;
-      this.showloginForm();
-    }
-  }
+  submitButton.addEventListener('click', handleSubmit);
+}
 
-  public showloginForm(): void {
-    const loginPage = new ValidationLoginPage();
-    this.setupSubmitHandler(loginPage);
+function handleSubmit(event: Event): void {
+  event.preventDefault();
+
+  if (validateAllFormFields()) {
+    //функия из ValidationLogin.ts
+    saveUserToLocalStorage();
+  } else {
+    console.error('Поля не прошли валидацию');
   }
+}
 
-  private setupSubmitHandler(loginPage: ValidationLoginPage): void {
-    const submitButton = document.querySelector('button[type="submit"]') as HTMLButtonElement;
-    if (!submitButton) {
-      console.error('Кнопка отправки не найдена!');
-      return;
-    }
+function saveUserToLocalStorage(): void {
+  const firstNameInput = document.querySelector('[name="firstName"]') as HTMLInputElement;
+  const surNameInput = document.querySelector('[name="surName"]') as HTMLInputElement;
 
-    const newSubmitButton = submitButton.cloneNode(true) as HTMLButtonElement;
-    submitButton.replaceWith(newSubmitButton);
-    newSubmitButton.addEventListener('click', (event: Event) => {
-      event.preventDefault();
-      this.handleFormSubmit(loginPage);
-    });
+  if (!firstNameInput || !surNameInput) {
+    console.error('Поля ввода не найдены');
+    return;
   }
 
-  private handleFormSubmit(loginPage: ValidationLoginPage): void {
-    const currentFormData = loginPage.getUserDataObject();
+  const userData = {
+    firstname: firstNameInput.value.trim(),
+    surename: surNameInput.value.trim(),
+  };
 
-    if (!currentFormData || !currentFormData.firstname || !currentFormData.surename) {
-      console.error('Неполные данные пользователя');
-      return;
-    }
-
-    this.userData = currentFormData;
-    const success = this.saveUserToLocalStorage();
-
-    if (success) {
-      this.currentLogin = true;
-    }
+  if (!userData.firstname || !userData.surename) {
+    console.error('Имя и фамилия обязательны для заполнения');
+    return;
   }
 
-  private saveUserToLocalStorage(): boolean {
-    try {
-      if (!this.userData.firstname || !this.userData.surename) {
-        console.error('Нет данных пользователя для сохранения');
-        return false;
-      }
-
-      const userJson = JSON.stringify(this.userData);
-      localStorage.setItem('userData', userJson);
-      this.updateUIAfterLogin();
-
-      return true;
-    } catch (error) {
-      console.error('Ошибка при сохранении в Local Storage:', error);
-      return false;
-    }
+  try {
+    const userJson = JSON.stringify(userData);
+    localStorage.setItem('userData', userJson);
+    updateUIAfterLogin();
+  } catch (error) {
+    console.error('Ошибка при сохранении в Local Storage:', error);
   }
+}
 
-  private updateUIAfterLogin(): void {
-    const container = document.getElementById('app') || document.body;
-    container.innerHTML = '';
-    this.currentLogin = true;
-    this.showStartPage();
-  }
-
-  public getUserFromLocalStorage() {
-    try {
-      const userJson = localStorage.getItem('userData');
-      if (userJson) {
-        return JSON.parse(userJson);
-      }
-      return null;
-    } catch (error) {
-      console.error('Ошибка при чтении из Local Storage:', error);
-      return null;
-    }
-  }
-
-  private showStartPage() {
-    const { logoutBtn, startBtn } = createUIStartPage();
-    this.startBtn = startBtn;
-    this.buttonLogout = logoutBtn;
-    this.setupLogoutHandler();
-    this.setupLoginHandler();
-  }
-
-  private setupLogoutHandler() {
-    if (this.buttonLogout) {
-      const newButton = this.buttonLogout.cloneNode(true) as HTMLElement;
-      this.buttonLogout.replaceWith(newButton);
-      this.buttonLogout = newButton;
-      this.buttonLogout.addEventListener('click', () => {
-        this.performLogout();
-      });
-    }
-  }
-
-  private setupLoginHandler() {
-    if (this.startBtn) {
-      const newButton = this.startBtn.cloneNode(true) as HTMLElement;
-      this.startBtn.replaceWith(newButton);
-      this.startBtn = newButton;
-      this.startBtn.addEventListener('click', () => {
-        closeStartPage();
-      });
-    }
-  }
-  public performLogout() {
-    localStorage.removeItem('userData');
-    this.currentLogin = false;
-    this.userData = {};
-
-    const container = document.body;
-    container.innerHTML = '';
-
-    this.showloginForm();
-  }
-
-  public isLoggedIn(): boolean {
-    return this.currentLogin;
-  }
-
-  public getUserData() {
-    return { ...this.userData };
-  }
+function updateUIAfterLogin(): void {
+  const container = document.body;
+  container.innerHTML = '';
+  createUIStartPage();
+  setupLogoutHandler();
+  setupStartHandler();
 }
