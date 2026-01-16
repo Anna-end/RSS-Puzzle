@@ -5,7 +5,7 @@ import {
 } from './components/LoginForm/LoginFormManager';
 import { createValidationLoginPage } from './components/LoginForm/ValidationLoginPage/ValidationLogin';
 import { createUIStartPage } from './pages/Start/startPage';
-import { setupStartHandler, createGamePage } from './components/Game/GameLogic';
+import { setupStartHandler } from './components/Game/GameLogic';
 
 async function initializeApp() {
   const isLoggedIn = checkUserLoginStatus();
