@@ -1,4 +1,4 @@
-import { createUIStartPage } from '../../pages/Start/sratrPage';
+import { createUIStartPage } from '../../pages/Start/startPage';
 import {
   createValidationLoginPage,
   validateAllFormFields,

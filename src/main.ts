@@ -4,7 +4,7 @@ import {
   setupSubmitHandler,
 } from './components/LoginForm/LoginFormManager';
 import { createValidationLoginPage } from './components/LoginForm/ValidationLoginPage/ValidationLogin';
-import { createUIStartPage } from './pages/Start/sratrPage';
+import { createUIStartPage } from './pages/Start/startPage';
 import { setupStartHandler, createGamePage } from './components/Game/GameLogic';
 
 async function initializeApp() {
